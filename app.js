@@ -217,10 +217,10 @@ document.addEventListener("DOMContentLoaded", () => {
       squares[packmanCurrentIndex].classList.contains("ghost") &&
       !squares[packmanCurrentIndex].classList.contains("scared-ghost")
     ) {
-      ghost.forEach((ghost) => clearInterval(ghost.timerId));
+      ghosts.forEach((ghost) => clearInterval(ghost.timerId));
       document.removeEventListener("keyup", movePacman);
       setTimeout(function () {
-        alert("GameOver");
+        alert("Game Over");
       }, 500);
     }
   }
