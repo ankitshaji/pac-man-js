@@ -12,20 +12,40 @@
 }
 
 .pac-dot {
-  background-color: green;
+  background-color: black;
   border: 5px solid white;
   box-sizing: border-box;
 }
 
 .wall {
-  background-color: blue;
+  background-color: black;
 }
 .power-pellet {
-  background-color: green;
+  background-color: red;
   border-radius: 10px;
 }
 
 .pac-man {
   background-color: yellow;
   border-radius: 10px;
+}
+
+.blinky{
+  background-color: red;
+}
+
+.pinky{
+  background-color: rgb(0, 0, 0);
+}
+
+.inky{
+  background-color: red; 
+}
+
+.clyde{
+  background-color: rgb(0, 0, 0);
+}
+
+.scared-ghost{
+  background-color: rgb(152, 152, 152);
 }
