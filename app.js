@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const scoreDisplay = document.getElementById('score');
+  const scoreDisplay = document.getElementById("score");
   const width = 28; //28*28 =784 squares
   let score = 0;
   const grid = document.querySelector(".grid");
@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     squares[packmanCurrentIndex].classList.add("pac-man");
     pacDotEaten();
-    powerPelletEaten()
-    //checkForGameOver()
+    powerPelletEaten();
+    checkForGameOver();
     //checkForWin()
   }
   document.addEventListener("keyup", movePacman);
@@ -135,18 +135,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function powerPelletEaten(){
-    if(squares[packmanCurrentIndex].classList.contains('power-pellet')){
-      score+=10;
-      ghosts.forEach(ghost => ghost.isScared = true)
-      setTimeout(unScareGhosts,10000)
-      squares[packmanCurrentIndex].classList.remove('power-pellet')
+  function powerPelletEaten() {
+    if (squares[packmanCurrentIndex].classList.contains("power-pellet")) {
+      score += 10;
+      ghosts.forEach((ghost) => (ghost.isScared = true));
+      setTimeout(unScareGhosts, 10000);
+      squares[packmanCurrentIndex].classList.remove("power-pellet");
     }
   }
-  function unScareGhosts(){
-    ghosts.forEach(ghost=>ghost.isScared=false)
+  function unScareGhosts() {
+    ghosts.forEach((ghost) => (ghost.isScared = false));
   }
-
 
   //ghost class
   class Ghost {
@@ -178,30 +177,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //moveGhost
   function moveGhost(ghost) {
-    const directions =  [-1, +1, width, -width]
-    let direction = directions[Math.floor(Math.random() * directions.length)]
+    const directions = [-1, +1, width, -width];
+    let direction = directions[Math.floor(Math.random() * directions.length)];
 
-    ghost.timerId = setInterval(function() {
-      if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
-        !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
-          squares[ghost.currentIndex].classList.remove(ghost.className)
-          squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
-          ghost.currentIndex += direction
-          squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-      } else direction = directions[Math.floor(Math.random() * directions.length)]
+    ghost.timerId = setInterval(function () {
+      if (
+        !squares[ghost.currentIndex + direction].classList.contains("ghost") &&
+        !squares[ghost.currentIndex + direction].classList.contains("wall")
+      ) {
+        squares[ghost.currentIndex].classList.remove(ghost.className);
+        squares[ghost.currentIndex].classList.remove("ghost", "scared-ghost");
+        ghost.currentIndex += direction;
+        squares[ghost.currentIndex].classList.add(ghost.className, "ghost");
+      } else direction = directions[Math.floor(Math.random() * directions.length)];
 
       if (ghost.isScared) {
-        squares[ghost.currentIndex].classList.add('scared-ghost')
+        squares[ghost.currentIndex].classList.add("scared-ghost");
       }
 
-      if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')) {
-        squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
-        ghost.currentIndex = ghost.startIndex
-        score +=100
-        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      if (
+        ghost.isScared &&
+        squares[ghost.currentIndex].classList.contains("pac-man")
+      ) {
+        squares[ghost.currentIndex].classList.remove(
+          ghost.className,
+          "ghost",
+          "scared-ghost"
+        );
+        ghost.currentIndex = ghost.startIndex;
+        score += 100;
+        squares[ghost.currentIndex].classList.add(ghost.className, "ghost");
       }
-    checkForGameOver()
-    }, ghost.speed)
+      checkForGameOver();
+    }, ghost.speed);
   }
 
+  function checkForGameOver() {
+    if (
+      squares[packmanCurrentIndex].classList.contains("ghost") &&
+      !squares[packmanCurrentIndex].classList.contains("scared-ghost")
+    ) {
+      ghost.forEach((ghost) => clearInterval(ghost.timerId));
+      document.removeEventListener("keyup", movePacman);
+      setTimeout(function () {
+        alert("GameOver");
+      }, 500);
+    }
+  }
 });
