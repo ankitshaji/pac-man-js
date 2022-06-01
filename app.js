@@ -178,33 +178,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //moveGhost
   function moveGhost(ghost) {
-    const directions = [-1, +1, width, -width];
-    let direction = directions[Math.floor(Math.random() * directions.length)];
+    const directions =  [-1, +1, width, -width]
+    let direction = directions[Math.floor(Math.random() * directions.length)]
 
-    ghost.timerId = setInterval(function () {
-      if (!squares[ghost.currentIndex + direction].classList.contains("ghost") &&
-        !squares[ghost.currentIndex + direction].classList.contains("wall")) {
-        console.log("ifstatment enter");
-        squares[ghost.currentIndex].classList.remove(ghost.className);
-        squares[ghost.currentIndex].classList.remove("ghost", "scared-ghost");
+    ghost.timerId = setInterval(function() {
+      if  (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+        !squares[ghost.currentIndex + direction].classList.contains('wall') ) {
+          squares[ghost.currentIndex].classList.remove(ghost.className)
+          squares[ghost.currentIndex].classList.remove('ghost', 'scared-ghost')
+          ghost.currentIndex += direction
+          squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      } else direction = directions[Math.floor(Math.random() * directions.length)]
 
-        ghost.currentIndex += direction;
-        squares[ghost.currentIndex].classList.add(ghost.className, "ghost");
-      } else {
-        direction = direction[Math.floor(Math.random() * directions.length)];
-        console.log("else statmenet");
-      }
-      //add scared ghost
-      if(ghost.isScared){
+      if (ghost.isScared) {
         squares[ghost.currentIndex].classList.add('scared-ghost')
       }
 
-      if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')){
-        squares[ghost.currentIndex].classList.remove(ghost.className,'ghost','scared-ghost');
-        ghost.currentIndex = ghost.startIndex;
-        score+100;
-        squares[ghost.currentIndex].classList.add(ghost.className,'ghost')
+      if(ghost.isScared && squares[ghost.currentIndex].classList.contains('pac-man')) {
+        squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+        ghost.currentIndex = ghost.startIndex
+        score +=100
+        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
       }
-    }, ghost.speed);
+    checkForGameOver()
+    }, ghost.speed)
   }
+
 });
